@@ -14,7 +14,7 @@ namespace Cas29
 
         string email = "DDavidovic@jum.mdok";
         string password = "LOzinka2589";
-        string username = "DaviDo";
+        string korisnicko = "DaviDo";
 
         /* comment */
 
@@ -53,7 +53,7 @@ namespace Cas29
 
             if (inputUserName.Displayed && inputUserName.Enabled)
             {
-                inputUserName.SendKeys(username);
+                inputUserName.SendKeys(korisnicko);
             }
 
             IWebElement inputPassword = driver.FindElement(By.Name("lozinka"));
@@ -76,6 +76,97 @@ namespace Cas29
             {
                 registerNew.Click();
             }
+        }
+
+        [Test]
+        [Category("SC")]
+        public void Login()
+        {
+
+            Navigate("http://shop.qa.rs/");
+
+            IWebElement signIn = driver.FindElement(By.XPath("//a[@href='/login']"));
+            if (signIn.Displayed && signIn.Enabled)
+            {
+                signIn.Click();
+            }
+            IWebElement username = driver.FindElement(By.Name("username"));
+            if (username.Displayed && username.Enabled)
+            {
+                username.SendKeys(korisnicko);
+            }
+
+            IWebElement inputPassword = driver.FindElement(By.Name("password"));
+
+            if (inputPassword.Displayed && inputPassword.Enabled)
+            {
+                inputPassword.SendKeys(password);
+            }
+
+            IWebElement sigNIn = driver.FindElement(By.Name("login"));
+            if (sigNIn.Displayed && sigNIn.Enabled)
+            {
+                sigNIn.Click();
+            }
+        }
+
+        [Test]
+        [Category("SC")]
+        public void CheckCartIsEmpty()
+        {
+            Login();
+            IWebElement signIn = driver.FindElement(By.XPath("//a[@href='/cart']"));
+            if (signIn.Displayed && signIn.Enabled)
+            {
+                signIn.Click();
+            }
+
+            IWebElement alert = driver.FindElement(By.XPath("//div[@class='alert alert-warning']"));
+            if (alert.Displayed && alert.Enabled)
+            {
+                Assert.Pass();
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [Test]
+        [Category("SC")]
+        [TestCase("DaviDo", "LOzinka2589")]
+        [TestCase("DaviDo", "pogresna sifra")]
+        [TestCase("pogresno korisnicko", "LOzinka2589")]
+        [TestCase("pogresno korisnicko", "pogresna sifra")]
+        public void Login_annotation(string korisnickoIme, string sifra)
+        {
+
+            Navigate("http://shop.qa.rs/");
+
+            IWebElement signIn = driver.FindElement(By.XPath("//a[@href='/login']"));
+            if (signIn.Displayed && signIn.Enabled)
+            {
+                signIn.Click();
+            }
+            IWebElement username = driver.FindElement(By.Name("username"));
+            if (username.Displayed && username.Enabled)
+            {
+                username.SendKeys(korisnickoIme);
+            }
+
+            IWebElement inputPassword = driver.FindElement(By.Name("password"));
+
+            if (inputPassword.Displayed && inputPassword.Enabled)
+            {
+                inputPassword.SendKeys(sifra);
+            }
+
+            IWebElement sigNIn = driver.FindElement(By.Name("login"));
+            if (sigNIn.Displayed && sigNIn.Enabled)
+            {
+                sigNIn.Click();
+            }
+
         }
 
         private void Navigate(string url)

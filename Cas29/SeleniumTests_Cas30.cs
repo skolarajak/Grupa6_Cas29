@@ -16,6 +16,8 @@ namespace Cas29
         string password = "LOzinka2589";
         string username = "DaviDo";
 
+        /* comment */
+
         [Test]
         [Category("SC")]
         public void Registration()
